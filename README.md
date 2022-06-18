@@ -7,6 +7,7 @@ SWEET-SPS is a Python implementation of the framework introduced in Izquierdo *e
 To run the scripts and code you need to install the following Python packages:
 
 - `numpy`
+- `scipy`
 - `cvxpy`
 - `matplotlib`
 - `sps`
@@ -18,7 +19,7 @@ To run the scripts and code you need to install the following Python packages:
 
 ## Reproducibility
 
-In the folder `papers\sweet` you may find the code reproducing Fig. 1 and 2 in the paper. 
+The notebook `sweet_figures.ipynb` reproduces Fig. 1 and 2 in the paper. 
 
 ## Citation
 
