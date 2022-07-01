@@ -7,7 +7,6 @@ import scipy.interpolate as sc
 from utils_hrtf import hrtf_generator, hrtf_bank
 import matplotlib.colors as colors
 from collections import Iterable
-from time import time
 
 
 class GreenFunction(metaclass=ABCMeta):
@@ -29,11 +28,8 @@ class HRTF(GreenFunction):
         self.form = 'HRTF'
         self.reference = reference
         self.domain = np.linspace(0, 1, 1025) * 22050
-        t0 = time()
         self.hrtf_bank = {side: [sc.interp1d(self.domain, hrtf)(self.frequencies) for hrtf in hrtf_bank[side][3]]
                           for side in SIDES}
-        t1 = time()
-        print('Time A', t1 - t0)
 
     def adjust_delay(self, signal, new_distance, old_distance):
         delay_distance = new_distance - old_distance

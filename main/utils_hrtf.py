@@ -9,7 +9,7 @@ preceding_distance_map = {1: 0.5,
                           2: 1,
                           3: 2}
 
-mat = {d: scipy.io.loadmat(f'data/hrtfs_wierstorf/QU_KEMAR_anechoic_{str(d).replace(".", "")}m.mat') for d in distances}
+mat = {d: scipy.io.loadmat(f'../../main/hrtfs_wierstorf/QU_KEMAR_anechoic_{str(d).replace(".", "")}m.mat') for d in distances}
 
 
 def hrtf_delay(signal, new_distance, old_distance, c=343):

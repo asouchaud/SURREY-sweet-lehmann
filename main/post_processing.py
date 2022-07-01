@@ -445,7 +445,7 @@ class PostProcessing:
     def compute_ILD(self, array):
         return 20 * np.log(np.abs(array['left']) / np.abs(array['right']))
 
-    def interaural_difference(self, mask=True, regions=True, loudspeakers=True, object_name='u', interaural_name='ITD'):
+    def interaural_difference(self, mask=True, regions=True, loudspeakers=True, object_name='u', interaural_name='IPD'):
         if self._GF.form != 'HRTF':
             raise TypeError('Green function must be of the form HRTF to evaluate interaural differences.')
         object_map = {'u': self._u,
