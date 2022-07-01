@@ -1,16 +1,15 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.colors as colors
+from collections.abc import Iterable
+from mpl_toolkits.axes_grid1 import make_axes_locatable
+from copy import copy
 from regions_interest import FORM, RegionOfInterest
 from loudspeakers import Loudspeakers
 from source import Source
 from utils_general import decibels, square, SMALL_NUMBER, g3dv, normalized, rotation_45, rotation_inverse_45, SIDES
 from utils_psychoacousticmodels import knobel_model, sherlock_model
 from green_function import Monopole
-from collections.abc import Iterable
-from mpl_toolkits.axes_grid1 import make_axes_locatable
-import matplotlib.ticker as ticker
-import matplotlib.colors as colors
-from copy import copy
 
 FIG_SIZE = (5, 5)
 
@@ -530,6 +529,7 @@ class PostProcessing:
         #     array *= self._region.mask
         nans_array = np.isnan(array.ravel())
         if plot_type == 'vector':
+            np.seterr(invalid='ignore')
             radians_array = ((array + 90) / 180 * np.pi)
             cartesi_error = np.abs((array - array_reference + 180) % 360 - 180)
             start_x, end_x, start_y, end_y = self._region.extent
@@ -583,7 +583,6 @@ class PostProcessing:
                             interpolation='spline16')
             sweet_spot = np.asarray(cartesi_error <= 5) * np.invert(mask)
             sweet_spot_size = np.nansum(sweet_spot) / np.sum(self._region.construct_form(points))
-            print(f'Sweet spot {name}: {sweet_spot_size}')
 
         elif plot_type == 'positive_angular':
             radians_array = ((array + 90) / 180 * np.pi)
@@ -612,7 +611,6 @@ class PostProcessing:
                             interpolation='nearest')
             sweet_spot = np.asarray(array <= vcenter) * self._region.mask
             sweet_spot_size = np.nansum(sweet_spot) / np.sum(self._region.mask)
-            print(f'Sweet spot {name}: {sweet_spot_size}')
             # ax.contour(rotation_inverse_45(cartesi_error),
             #            levels=[5],
             #            extent=self._region.extent)
@@ -631,7 +629,6 @@ class PostProcessing:
                            interpolation='spline16')
             sweet_spot = np.asarray(array <= center) * np.invert(mask)
             sweet_spot_size = np.nansum(sweet_spot) / np.sum(self._region.construct_form(points))
-            print(f'Sweet spot {name}: {sweet_spot_size}')
         if loudspeakers:
             self.include_loudspeakers()
         if regions:
