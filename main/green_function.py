@@ -9,6 +9,7 @@ import matplotlib.colors as colors
 from collections import Iterable
 
 
+
 class GreenFunction(metaclass=ABCMeta):
     def __init__(self, frequencies, c=343):
         self.frequencies = np.asarray(frequencies) if isinstance(frequencies, Iterable) else np.asarray([frequencies])
